@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Google Sheets API Quickstart</title>
     <meta charset='utf-8' />
+    <!--bootstrap meta tag is the line below here-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <head>
 </head>
   </head>
@@ -11,9 +13,8 @@
 
     <!--Add buttons to initiate auth sequence and sign out-->
     <button id="authorize-button" style="display: none;">Authorize</button>
-    <!--<button id="signout-button" style="display: none;">Sign Out</button>-->
+    <button id="signout-button" style="display: none;">Sign Out</button>
 
-    <!--<button onclick="printSingle()">Print Single Question</button>-->
     <button onclick="ImportQuestions()">Start Quiz</button> <br><br><br>
     <pre id="content"></pre>
 
@@ -21,10 +22,15 @@
     <h2 id="question"></h2>
     <h2 id="demo"></h2>
 
-
-    <button onclick="someAffinity()">Some Affinity</button>
-    <button onclick="strongAffinity()">Strong Affinity</button>
+    <!-- these are the original buttons when I had three functions
     <button onclick="noAffinity()">No Affinity</button>
+    <button onclick="someAffinity()">Some Affinity</button>
+    <button onclick="strongAffinity()">Strong Affinity</button> <br><br><br>-->
+
+    <!-- these are the new buttons each passing in a value to the single function-->
+    <button onclick="Affinity(0)">No Affinity</button>
+    <button onclick="Affinity(1)">Some Affinity</button>
+    <button onclick="Affinity(3)">Strong Affinity</button>
 
     <script type="text/javascript">
       // Client ID and API key from the Developer Console
@@ -109,6 +115,21 @@
       Nigel's hacking starts here
       */
 
+      function Affinity(strength) {
+        var sheetRange = sheetNum + (questionNum + offset);
+        console.log(sheetRange);
+        gapi.client.sheets.spreadsheets.values.update({
+          spreadsheetId: '1l1-ZHO16Fy8os9xCkGd08X7uke_g9P0pgUlU7RBq6iw',
+          range: sheetRange,
+                             valueInputOption: 'USER_ENTERED',
+                             values: [ [strength] ]
+                         }).then(function(response) {
+                             console.log(response);
+                         });
+                         loadQuestion();
+
+      }
+
     function noAffinity() {
       gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: '1l1-ZHO16Fy8os9xCkGd08X7uke_g9P0pgUlU7RBq6iw',
@@ -130,6 +151,7 @@
                        }).then(function(response) {
                            console.log(response);
                        });
+                       loadQuestion();
 
     }
     function someAffinity() {

@@ -1,0 +1,23 @@
+{
+  "name": "google_sheets_powered_quizz",
+  "version": "1.0.0",
+  "description": "a google sheets powered quiz",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/motioncircus/GoogleSheetsPoweredQuiz.git"
+  },
+  "author": "nigel haslam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/motioncircus/GoogleSheetsPoweredQuiz/issues"
+  },
+  "homepage": "https://github.com/motioncircus/GoogleSheetsPoweredQuiz#readme"
+}
