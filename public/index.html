@@ -11,23 +11,18 @@
   <body>
     <h1>Enneagram Online Quiz</h1>
 
-    <!--Add buttons to initiate auth sequence and sign out-->
+    <!--Add buttons to initiate auth sequence and sign out
     <button id="authorize-button" style="display: none;">Authorize</button>
-    <button id="signout-button" style="display: none;">Sign Out</button>
+    <button id="signout-button" style="display: none;">Sign Out</button>-->
 
-    <button onclick="ImportQuestions()">Start Quiz</button> <br><br><br>
+    <!--<button onclick="ImportQuestions()">Start Quiz</button> <br><br><br>-->
     <pre id="content"></pre>
 
-    <button onclick="loadQuestion()">Next Question</button>  <br><br><br>
+    <!--<button onclick="loadQuestion()">Next Question</button>  <br><br><br>-->
     <h2 id="question"></h2>
     <h2 id="demo"></h2>
 
-    <!-- these are the original buttons when I had three functions
-    <button onclick="noAffinity()">No Affinity</button>
-    <button onclick="someAffinity()">Some Affinity</button>
-    <button onclick="strongAffinity()">Strong Affinity</button> <br><br><br>-->
 
-    <!-- these are the new buttons each passing in a value to the single function-->
     <button onclick="Affinity(0)">No Affinity</button>
     <button onclick="Affinity(1)">Some Affinity</button>
     <button onclick="Affinity(3)">Strong Affinity</button>
@@ -130,41 +125,6 @@
 
       }
 
-    function noAffinity() {
-      gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: '1l1-ZHO16Fy8os9xCkGd08X7uke_g9P0pgUlU7RBq6iw',
-        range: 'Sheet2!B5',
-                           valueInputOption: 'USER_ENTERED',
-                           values: [ ['0'] ]
-                       }).then(function(response) {
-                           console.log(response);
-                       });
-    }
-    function strongAffinity() {
-      var sheetRange = sheetNum + (questionNum + offset);
-      console.log(sheetRange);
-      gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: '1l1-ZHO16Fy8os9xCkGd08X7uke_g9P0pgUlU7RBq6iw',
-        range: sheetRange,
-                           valueInputOption: 'USER_ENTERED',
-                           values: [ ['3'] ]
-                       }).then(function(response) {
-                           console.log(response);
-                       });
-                       loadQuestion();
-
-    }
-    function someAffinity() {
-      gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: '1l1-ZHO16Fy8os9xCkGd08X7uke_g9P0pgUlU7RBq6iw',
-        range: 'Sheet2!B5',
-                           valueInputOption: 'USER_ENTERED',
-                           values: [ ['1'] ]
-                       }).then(function(response) {
-                           console.log(response);
-                       });
-    }
-
 
     function ImportQuestions() {
       gapi.client.sheets.spreadsheets.values.get({
@@ -174,7 +134,7 @@
         //console.log('resp->',response);
         range = response.result;
         if (range.values.length > 0) {
-          appendPre('Click the button below for a question');
+          appendPre('Answer the following questions as honestly as you can');
           for (i = 0; i < range.values.length; i++) {
             var row = range.values[i];
             // Print column indice 0 plus, optionally, 1 and 2
@@ -189,37 +149,35 @@
     }
 
 
-
-var offset = 4
+var offset = 5
 var range
-var questionNum = 0;
+var questionNum = -1;
 var sheetNum = 'Sheet2!B'
 var answerNum =  questionNum + 6;
-
-
 var done = false;
-
 
 function loadQuestion() {
   if (range) console.log(range);
     questionNum++;
     document.getElementById("question").innerHTML = range.values[questionNum];
   }
+</script>
 
 
-  function printSingle(){
-    if (range) console.log(range);
-    document.getElementById("demo").innerHTML = range.values[0];
-  }
-     </script>
+  <script async defer src="https://apis.google.com/js/api.js"
+    onload="this.onload=function(){};handleClientLoad()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
 
+  </script>
 
+<script>
+setTimeout(function(){
+  ImportQuestions();
+}, 2000);
+setTimeout(function(){
+  loadQuestion();
+}, 4000);
+</script>
 
-
-    <script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};handleClientLoad()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()">
-
-    </script>
   </body>
 </html>
