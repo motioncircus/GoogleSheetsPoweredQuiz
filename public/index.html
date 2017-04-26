@@ -112,7 +112,9 @@
 
       function Affinity(strength) {
         var sheetRange = sheetNum + (questionNum + offset);
-        console.log(sheetRange);
+        var i = 0;
+        //console.log(sheetRange);
+        if (questionNum < 7)  {
         gapi.client.sheets.spreadsheets.values.update({
           spreadsheetId: '1l1-ZHO16Fy8os9xCkGd08X7uke_g9P0pgUlU7RBq6iw',
           range: sheetRange,
@@ -122,7 +124,11 @@
                              console.log(response);
                          });
                          loadQuestion();
-
+                         answerSet.push(strength);
+                         console.log(answerSet)
+                       } else {
+                       document.getElementById("question").innerHTML = 'Thank you for participating in our Enneagram quiz development';
+                     }
       }
 
 
@@ -148,19 +154,18 @@
       });
     }
 
-
+var answerSet = []
 var offset = 5
 var range
 var questionNum = -1;
 var sheetNum = 'Sheet2!B'
-var answerNum =  questionNum + 6;
 var done = false;
 
 function loadQuestion() {
-  if (range) console.log(range);
+  if (range) //console.log(range);
     questionNum++;
     document.getElementById("question").innerHTML = range.values[questionNum];
-  }
+     }
 </script>
 
 
